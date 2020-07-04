@@ -76,22 +76,46 @@ func TestErode(t *testing.T) {
 }
 
 func benchmarkDilate(src [][]int, kernelSize int, b *testing.B) {
+	b.StartTimer()
 	for n := 0; n < b.N; n++ {
 		Dilate(src, kernelSize)
 	}
+	b.StopTimer()
 }
 
-func BenchmarkTestDilate2M(b *testing.B)  { benchmarkDilate(bigMat, 5, b) }
-func BenchmarkTestDilate64k(b *testing.B) { benchmarkDilate(smallMat, 5, b) }
+func BenchmarkTestDilate2M(b *testing.B) {
+	b.StopTimer()
+	var mat [][]int
+	copy(mat, bigMat)
+	benchmarkDilate(mat, 5, b)
+}
+func BenchmarkTestDilate64k(b *testing.B) {
+	b.StopTimer()
+	var mat [][]int
+	copy(mat, smallMat)
+	benchmarkDilate(mat, 5, b)
+}
 
 func benchmarkErode(src [][]int, kernelSize int, b *testing.B) {
+	b.StartTimer()
 	for n := 0; n < b.N; n++ {
 		Erode(src, kernelSize)
 	}
+	b.StopTimer()
 }
 
-func BenchmarkTestErode2M(b *testing.B)  { benchmarkErode(bigMat, 5, b) }
-func BenchmarkTestErode64k(b *testing.B) { benchmarkErode(smallMat, 5, b) }
+func BenchmarkTestErode2M(b *testing.B) {
+	b.StopTimer()
+	var mat [][]int
+	copy(mat, bigMat)
+	benchmarkErode(mat, 5, b)
+}
+func BenchmarkTestErode64k(b *testing.B) {
+	b.StopTimer()
+	var mat [][]int
+	copy(mat, smallMat)
+	benchmarkErode(mat, 5, b)
+}
 
 const (
 	bigMatSize   = 1 << 21
